@@ -1,0 +1,1570 @@
+# %% [code]
+---
+title: "Cyclistic Bikeshare"  
+subtitle: Capstone
+author: "T. Green"
+
+output:
+	html_document:
+		number_sections: true
+		toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Google Profressional Data Analytics Capstone
+## Environment setup
+
+```{r chunk-1}
+
+## ------------------------------------------------------
+## Load required libraries
+## Suppress warnings
+## ------------------------------------------------------
+
+
+library(tidyverse)
+library(rmarkdown)
+
+
+options(warn = -1)
+
+```
+
+
+
+```{r}
+
+## ------------------------------------------------------
+## List files
+## ------------------------------------------------------
+
+
+list.files(path = "../input/cyclistic-capstone")
+
+
+```
+
+
+
+## Examine Flat Files
+
+```{r chunk-3}
+
+## ------------------------------------------------------
+## Assign csv file to y2021_05 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 531,633 rows
+## ------------------------------------------------------
+
+
+y2021_05 <- read_csv(file = "../input/cyclistic-capstone/202105-divvy-tripdata.csv")
+head(y2021_05)
+str(y2021_05)
+summary(y2021_05)
+
+```
+
+
+```{r chunk-4}
+
+## ------------------------------------------------------
+## Assign csv file to y2021_06 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 729,595 rows
+## ------------------------------------------------------
+
+
+y2021_06 <- read_csv(file = "../input/cyclistic-capstone/202106-divvy-tripdata.csv")
+head(y2021_06)
+str(y2021_06)
+summary(y2021_06)
+
+
+```
+
+
+
+```{r chunk-5}
+
+## ------------------------------------------------------
+## Assign csv file to y2021_07 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 822,410 rows
+## ------------------------------------------------------
+
+
+y2021_07 <- read_csv(file = "../input/cyclistic-capstone/202107-divvy-tripdata.csv")
+head(y2021_07)
+str(y2021_07)
+summary(y2021_07)
+
+```
+
+```{r chunk-6}
+
+## ------------------------------------------------------
+## Assign csv file to y2021_08 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 804,352 rows
+## ------------------------------------------------------
+
+
+y2021_08 <- read_csv(file = "../input/cyclistic-capstone/202108-divvy-tripdata.csv")
+head(y2021_08)
+str(y2021_08)
+summary(y2021_08)
+
+```
+
+
+```{r chunk-7}
+
+## ------------------------------------------------------
+## Assign csv file to y2021_09 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 756,147 rows
+## ------------------------------------------------------
+
+
+y2021_09 <- read_csv(file = "../input/cyclistic-capstone/202109-divvy-tripdata.csv")
+head(y2021_09)
+str(y2021_09)
+summary(y2021_09)
+
+```
+
+
+```{r chunk-8}
+
+## ------------------------------------------------------
+## Assign csv file to y2021_10 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 631,226 rows
+## ------------------------------------------------------
+
+
+y2021_10 <- read_csv(file = "../input/cyclistic-capstone/202110-divvy-tripdata.csv")
+head(y2021_10)
+str(y2021_10)
+summary(y2021_10)
+
+```
+
+
+```{r chunk-9}
+
+## ------------------------------------------------------
+## Assign csv file to y2021_11 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 359,978 rows
+## ------------------------------------------------------
+
+
+y2021_11 <- read_csv(file = "../input/cyclistic-capstone/202111-divvy-tripdata.csv")
+head(y2021_11)
+str(y2021_11)
+summary(y2021_11)
+
+```
+
+
+```{r chunk-10}
+
+## ------------------------------------------------------
+## Assign csv file to y2021_12 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 247,540 rows
+## ------------------------------------------------------
+
+
+y2021_12 <- read_csv(file = "../input/cyclistic-capstone/202112-divvy-tripdata.csv")
+head(y2021_12)
+str(y2021_12)
+summary(y2021_12)
+
+
+```
+
+
+```{r chunk-11}
+
+## ------------------------------------------------------
+## Assign csv file to y2022_01 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 103,770 rows
+## ------------------------------------------------------
+
+
+y2022_01 <- read_csv(file = "../input/cyclistic-capstone/202201-divvy-tripdata.csv")
+head(y2022_01)
+str(y2022_01)
+summary(y2022_01)
+
+
+```
+
+
+```{r chunk-12}
+
+## ------------------------------------------------------
+## Assign csv file to y2022_02 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 115,609 rows
+## ------------------------------------------------------
+
+
+y2022_02 <- read_csv(file = "../input/cyclistic-capstone/202202-divvy-tripdata.csv")
+head(y2022_02)
+str(y2022_02)
+summary(y2022_02)
+
+
+```
+
+
+```{r chunk-13}
+
+## ------------------------------------------------------
+## Assign csv file to y2022_03 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 284,042 rows
+## ------------------------------------------------------
+
+
+y2022_03 <- read_csv(file = "../input/cyclistic-capstone/202203-divvy-tripdata.csv")
+head(y2022_03)
+str(y2022_03)
+summary(y2022_03)
+
+```
+
+```{r chunk-14}
+
+## ------------------------------------------------------
+## Assign csv file to y2022_04 for a preliminary view 
+## View first six rows of data
+## View file structure
+## View summary of data
+## Imported 371,249 rows
+## ------------------------------------------------------
+
+
+y2022_04 <- read_csv(file = "../input/cyclistic-capstone/202204-divvy-tripdata.csv")
+head(y2022_04)
+str(y2022_04)
+summary(y2022_04)
+
+```
+
+## Merge Flat Files
+
+
+```{r  chunk-15}
+
+## -------------------------------------------------------
+## Merge ALL csv files 
+## Imported 5,757,551 records
+## -------------------------------------------------------
+
+cyclistic_merged <- rbind(y2021_05
+                          , y2021_06
+                          , y2021_07
+                          , y2021_08
+                          , y2021_09
+                          , y2021_10
+                          , y2021_11
+                          , y2021_12
+                          , y2022_01
+                          , y2022_02
+                          , y2022_03
+                          , y2022_04
+)
+
+```
+
+
+## Data Transformation
+
+
+Load additional libraries required for data transformation.
+
+
+
+
+```{r   chunk-16}
+
+## ------------------------------------------------------
+## Load required libraries
+## Suppress warnings
+## ------------------------------------------------------
+
+library(here)
+library(skimr)
+library(dplyr)
+library(janitor)
+library(data.table)
+library(geosphere)
+
+```
+
+
+```{r  chunk-17}
+
+## -------------------------------------------------------
+## Remove non character spaces from data set
+## -------------------------------------------------------
+
+clean_names(cyclistic_merged)
+
+```
+
+
+```{r   chunk-18}
+
+## -------------------------------------------------------
+## Inspect unique values in variable
+## Rideable type | start station name | start station id
+## End station name | end station id | member casual
+## - Divvy, Chargingstx, Temp, Corporate Private racks and
+## NA fields - ** remove after updates are made **
+## -------------------------------------------------------
+
+
+unique(cyclistic_merged$rideable_type)
+unique(cyclistic_merged$member_casual)
+
+
+#### omitted for notebook ####
+
+# unique(cyclistic_merged$start_station_name) 
+# unique(cyclistic_merged$start_station_id)
+# unique(cyclistic_merged$end_station_name)
+# unique(cyclistic_merged$end_station_id)
+
+
+```
+
+
+```{r   chunk-19}
+
+## -------------------------------------------------------
+## Create a copy of start stations to be removed 
+## Returned 29,918 records 
+## - Divvy, Chargingstx, Temp, and Corporate Private racks
+## - NA station information to be checked last
+## -------------------------------------------------------
+
+
+start_stations <- cyclistic_merged %>% 
+  filter(start_station_id == "Hubbard Bike-checking (LBS-WH-TEST)" |
+           start_station_id == "Bissell St & Armitage Ave - Charging" |
+           start_station_id == "charginstx1" |
+           start_station_id == "DIVVY CASSETTE REPAIR MOBILE STATION" |
+           start_station_id == "charginstx3" |
+           start_station_id == "Hastings WH2" |
+           start_station_id == "Lincoln Ave & Rosco St - Charging" |
+           start_station_id == "chargingstx5" |
+           start_station_id == "chargingstx4" |
+           start_station_id == "Pawel Bialowas - Test- PBSC charging station" |
+           start_station_id == "DIVVY 001" |
+           start_station_id == "Wilton Ave & Diversey Pkwy - Charging" |
+           start_station_id == "13259" |
+           start_station_id == "TA1309000008" |
+           start_station_id == "13099" |
+           start_station_id == "KA1504000141" |
+           start_station_id == "TA1308000026" |
+           start_station_id == "13285" |
+           start_station_id == "20999"
+)
+
+
+```
+
+
+
+
+```{r chunk-20}
+
+## -------------------------------------------------------
+## Remove 29,918 records 
+## Divvy, Chargingstx, Temp, and Corporate Private racks
+## Remaining - 5,727,633 records
+## -------------------------------------------------------
+
+
+cyclistic_merged <- cyclistic_merged %>% anti_join(start_stations)
+
+
+```
+
+
+```{r chunk-21}
+
+## -------------------------------------------------------
+## Create a copy of end stations to be removed 
+## Returned 28,200 records 
+## - Divvy, Chargingstx, Temp, and Corporate Private racks
+## -------------------------------------------------------
+
+
+end_stations <- cyclistic_merged %>% 
+  filter(end_station_id == "Hubbard Bike-checking (LBS-WH-TEST)" |
+           end_station_id == "Bissell St & Armitage Ave - Charging" |
+           end_station_id == "charginstx1" |
+           end_station_id == "DIVVY CASSETTE REPAIR MOBILE STATION" |
+           end_station_id == "charginstx3" |
+           end_station_id == "Hastings WH2" |
+           end_station_id == "Lincoln Ave & Rosco St - Charging" |
+           end_station_id == "chargingstx5" |
+           end_station_id == "chargingstx4" |
+           end_station_id == "Pawel Bialowas - Test- PBSC charging station" |
+           end_station_id == "DIVVY 001" |
+           end_station_id == "Wilton Ave & Diversey Pkwy - Charging" |
+           end_station_id == "13259" |
+           end_station_id == "TA1309000008" |
+           end_station_id == "13099" |
+           end_station_id == "KA1504000141" |
+           end_station_id == "TA1308000026" |
+           end_station_id == "13285" |
+           end_station_id == "20999"
+  )
+
+```
+
+
+```{r chunk-22}
+
+## -------------------------------------------------------
+## Remove 28,200 records 
+## Divvy, Chargingstx, Temp, and Corporate Private racks
+## Remaining - 5,699,433 records
+## -------------------------------------------------------
+
+
+cyclistic_merged <- cyclistic_merged %>% anti_join(end_stations)
+
+
+```
+
+
+```{r chunk-23}
+
+
+## -------------------------------------------------------
+## Search for missing start station names with station id 
+## Imported 3 records
+## Station id: 13221 |  20215   | WL-008
+## -------------------------------------------------------
+
+
+cyclistic_merged %>%
+  filter(is.na(start_station_name) & !is.na(start_station_id))  
+
+```
+
+
+```{r chunk-24}
+
+## -------------------------------------------------------
+## Search for station id 13221 
+## Start station name = Wood St & Milwaukee Ave
+## -------------------------------------------------------
+
+
+head(cyclistic_merged %>%
+       filter(start_station_id == 13221) %>% 
+       select(start_station_name), 10)
+
+
+```
+
+
+```{r chunk-25}
+
+## -------------------------------------------------------
+## Search for station id 20215 
+## Start station name = Hegewisch Metra Station
+## -------------------------------------------------------
+
+
+head(cyclistic_merged %>%
+       filter(start_station_id == 20215) %>% 
+       select(start_station_name), 10)
+
+
+```
+
+
+```{r chunk-26}
+
+## -------------------------------------------------------
+## Search for station id WL-0008 
+## Start station name = Clinton St & Roosevelt Rd
+## -------------------------------------------------------
+
+head(cyclistic_merged %>%
+       filter(start_station_id== "WL-008") %>% 
+       select(start_station_name), 10)
+
+
+```
+
+
+```{r chunk-27}
+
+## -------------------------------------------------------
+## Update missing station names
+## Cleared 788,155 start station NA values
+## Cleared 840,793 end station NA values
+## Skim for updates
+## -------------------------------------------------------
+
+
+cyclistic_merged$start_station_name[ 
+  which(is.na(
+    cyclistic_merged$start_station_id == 13221))] <- "Wood St & Milwaukee Ave"   
+
+
+cyclistic_merged$end_station_name[ 
+  which(is.na(
+    cyclistic_merged$end_station_id == 13221))] <- "Wood St & Milwaukee Ave"   
+
+
+skim_without_charts(cyclistic_merged)
+
+
+```
+
+
+```{r chunk-28}
+
+## -------------------------------------------------------
+## Inspect remaining null start station names
+## 176105D1F8A1216B record  - station id 13221
+## DE82A15026BA3056 record  - station id 20215
+## EE197EDA4CF8CFE5 record  - station id WL-008
+## -------------------------------------------------------
+
+
+cyclistic_merged %>% 
+        select(start_station_name, start_station_id, start_lat, start_lat, everything()) %>% 
+        filter(is.na(start_station_name))
+
+```
+
+
+```{r chunk-29}
+
+## -------------------------------------------------------
+## Update remaining 3 start station names
+## 176105D1F8A1216B record - Wood St & Milwaukee Ave | 13221
+## DE82A15026BA3056 record - Hegewisch Metra Station | 20215
+## EE197EDA4CF8CFE5 record - Clinton St & Roosevelt Rd | WL-008
+## -------------------------------------------------------
+
+
+cyclistic_merged$start_station_name <- 
+  ifelse(cyclistic_merged$ride_id == "176105D1F8A1216B", 
+         "Wood St & Milwaukee Ave", 
+         cyclistic_merged$start_station_name)
+
+
+cyclistic_merged$start_station_name <- 
+  ifelse(cyclistic_merged$ride_id == "DE82A15026BA3056", 
+         "Clinton St & Roosevelt Rd", 
+         cyclistic_merged$start_station_name)
+
+
+cyclistic_merged$start_station_name <- 
+  ifelse(cyclistic_merged$ride_id == "EE197EDA4CF8CFE5", 
+         "Wood St & Milwaukee Ave", 
+         cyclistic_merged$start_station_name)
+
+
+skim_without_charts(cyclistic_merged)
+
+```
+
+
+```{r chunk-30}
+
+## -------------------------------------------------------
+## Inspect NA start station id
+## Start station name = Wood St & Milwaukee Ave  | id = 13221
+## Cleared 788,155 NA values
+## Skim for updates
+## -------------------------------------------------------
+
+
+cyclistic_merged %>% 
+  select(start_station_id, start_station_name, start_lat, start_lng) %>% 
+  filter(is.na(start_station_id)) %>%
+  group_by(start_station_name)
+
+
+cyclistic_merged<-cyclistic_merged %>% 
+  mutate(start_station_id = ifelse(start_station_name == "Wood St & Milwaukee Ave", 
+                                   "13221", start_station_id))
+
+
+skim_without_charts(cyclistic_merged) # skim after changes to ensure desired change occured
+
+
+```
+
+
+```{r chunk-31}
+
+## -------------------------------------------------------
+## Inspect NA end station id
+## End station name = Wood St & Milwaukee Ave  | id = 13221
+## Cleared 840,793 NA values
+## Skim for updates
+## -------------------------------------------------------
+
+
+cyclistic_merged %>% 
+  select(end_station_id, end_station_name, end_lat, end_lng) %>% 
+  filter(is.na(end_station_id)) %>%
+  group_by(end_station_name)
+
+
+cyclistic_merged<-cyclistic_merged %>% 
+  mutate(end_station_id = ifelse(end_station_name == "Wood St & Milwaukee Ave", 
+                                 "13221", end_station_id))
+
+
+skim_without_charts(cyclistic_merged)
+
+
+```
+
+
+```{r chunk-32}
+
+## -------------------------------------------------------
+## Inspect NA end latitude and longitude
+## End latitude and longitude = Wood St & Milwaukee Ave 
+## End lat = 41.9  |  end lng = -87.6
+## Cleared 4,741 NA values for both end lat and end lng
+## Skim for updates
+## -------------------------------------------------------
+
+
+cyclistic_merged %>% 
+  select(end_station_id, end_station_name, end_lat, end_lng) %>% 
+  filter(is.na(end_lat)) %>%
+  group_by(end_station_name)
+
+
+cyclistic_merged<-cyclistic_merged %>% 
+  mutate(end_lat = ifelse(end_station_name == "Wood St & Milwaukee Ave", 41.9, end_lat)) %>% 
+  mutate(end_lng = ifelse(end_station_name == "Wood St & Milwaukee Ave", -87.6, end_lng))
+
+
+skim_without_charts(cyclistic_merged)
+
+```
+
+
+```{r chunk-33}
+
+## -------------------------------------------------------
+## Insert columns for analysis
+## Date 
+## Day of week
+## Day of month day of the month 1-31 - space before single digits
+## Month
+## Hour
+## Ride length
+## Ride distance in miles
+## Glimpse records
+## Skim new columns
+## -------------------------------------------------------
+
+
+cyclistic_merged$date <- format(as.Date(cyclistic_merged$started_at), "%m-%d-%Y" )
+
+cyclistic_merged$day_of_week <- format(as.Date(cyclistic_merged$started_at), "%A")
+
+cyclistic_merged$day_of_month <- format(as.Date(cyclistic_merged$started_at), "%e") 
+
+cyclistic_merged$month <- format(as.Date(cyclistic_merged$started_at), "%b '%y")
+
+cyclistic_merged$hour <- as.numeric(hour(cyclistic_merged$started_at))
+
+cyclistic_merged$ride_length <- as.numeric(difftime(cyclistic_merged$ended_at, 
+                                                    cyclistic_merged$started_at, units = "mins"))
+
+
+cyclistic_merged$ride_miles <- distGeo(matrix(c(cyclistic_merged$start_lng, 
+                                                cyclistic_merged$start_lat), ncol = 2), 
+                                       matrix(c(cyclistic_merged$end_lng, 
+                                                cyclistic_merged$end_lat), 
+                                              ncol = 2)) / 1609.35
+
+
+cyclistic_merged <- cyclistic_merged %>% 
+  mutate(round_trip=case_when(
+    start_station_name==end_station_name ~ "roundtrip",
+    start_station_id !=end_station_name ~ "oneway"))
+
+
+glimpse(cyclistic_merged)
+skim_without_charts(cyclistic_merged)
+
+
+```
+
+
+Remove Records outside of one (1) Day
+
+
+```{r chunk-34}
+
+## -------------------------------------------------------
+## Create a copy of ride lengths under 1 minute
+## Returned 91,109 records
+## -------------------------------------------------------
+
+under_min <- cyclistic_merged %>% 
+  filter(ride_length <1)
+
+
+```
+
+
+```{r chunk-35}
+
+## -------------------------------------------------------
+## Remove 91,109 records 
+## Rides less than 1 minute
+## Remaining - 5,608,324 records
+## -------------------------------------------------------
+
+
+cyclistic_merged <- cyclistic_merged %>% anti_join(under_min)
+
+
+skim_without_charts(cyclistic_merged)
+
+
+```
+
+
+```{r chunk-36}
+
+## -------------------------------------------------------
+## Create a copy of ride lengths over 1440 minutes (24 hrs)
+## Returned 4,035 records
+## -------------------------------------------------------
+
+
+over_day <- cyclistic_merged %>% 
+  filter(ride_length >1440)
+
+
+```
+
+
+```{r chunk-37}
+
+## -------------------------------------------------------
+## Remove 4,035 records 
+## Rides greater than 1440 minutes (24 hrs)
+## Remaining - 5,604,289 records
+## -------------------------------------------------------
+
+
+cyclistic_merged <- cyclistic_merged %>% anti_join(over_day)
+
+
+skim_without_charts(cyclistic_merged)
+
+```
+
+
+```{r chunk-38}
+
+## -------------------------------------------------------
+## Change member casual variable types to factor and order
+## member casual | rideable type | round trip | day of week
+## -------------------------------------------------------
+
+
+cyclistic_merged$member_casual <- ordered(
+  cyclistic_merged$member_casual, levels = c("member", "casual"))
+
+
+cyclistic_merged$rideable_type <- ordered(
+  cyclistic_merged$rideable_type, levels = c("classic_bike", "electric_bike", 
+                                             "docked_bike"))
+
+
+cyclistic_merged$round_trip <- ordered(
+  cyclistic_merged$round_trip, levels = c("oneway", "roundtrip"))
+
+
+
+cyclistic_merged$day_of_week <- ordered(cyclistic_merged$day_of_week, levels = 
+                                          c("Monday", "Tuesday", "Wednesday", 
+                                            "Thursday", "Friday", "Saturday", "Sunday"))
+
+
+str(cyclistic_merged)
+
+
+skim_without_charts(cyclistic_merged)
+
+
+```
+
+## Descriptive Analysis
+
+
+
+Load additional libraries required for descriptive analysis.
+
+
+
+```{r chunk-39}
+
+## ------------------------------------------------------
+## Load required libraries
+## Suppress exponential notation
+## ------------------------------------------------------
+
+
+
+library(DescTools)
+
+
+options(scipen = 10)
+
+```
+
+
+```{r chunk-40}
+
+## ------------------------------------------------------
+## Compact structure overview 
+## ------------------------------------------------------
+
+Abstract(cyclistic_merged)
+
+
+```
+
+
+```{r chunk-41}
+
+## ------------------------------------------------------
+## Explore data set 
+## ------------------------------------------------------
+
+mean_length <- mean(cyclistic_merged$ride_length)
+print(mean_length)  # Time difference of 19.02767 mins
+
+
+
+
+mean_miles <- mean(cyclistic_merged$ride_miles)
+print(mean_miles) # 1.973248
+
+
+median_length <- median(cyclistic_merged$ride_length)
+print(median_length)  # Time difference of 11.7 mins
+
+median_miles <- median(cyclistic_merged$ride_miles)
+print(median_miles) # 1.217151
+
+
+Mode(cyclistic_merged$ride_length) # Mode = 5.783333 | freq: 5,698
+
+
+Mode(cyclistic_merged$ride_miles)  # Mode = 0 | freq: 213,562
+
+
+```
+
+
+```{r chunk-42}
+
+## ------------------------------------------------------
+## Continue exploring data set 
+## ------------------------------------------------------
+
+cyclistic_merged %>% 
+  tabyl(member_casual) 
+
+
+```
+
+```{r chunk-43}
+
+cyclistic_merged %>% 
+  tabyl(round_trip)
+
+```
+
+
+```{r chunk-44}
+
+cyclistic_merged %>% 
+  tabyl(round_trip, member_casual)
+
+```
+
+
+```{r chunk-45}
+
+cyclistic_merged %>% 
+  tabyl(rideable_type) 
+
+
+```
+
+
+```{r chunk-46}
+
+cyclistic_merged %>% 
+  tabyl(month) 
+
+
+```
+
+
+```{r chunk-47}
+
+cyclistic_merged %>% 
+  tabyl(day_of_week)
+
+
+```
+
+
+```{r chunk-48}
+
+cyclistic_merged %>% 
+  tabyl(day_of_month) 
+
+```
+
+
+```{r chunk-49}
+
+cyclistic_merged %>% 
+  tabyl(hour) 
+
+```
+
+
+```{r chunk-50}
+
+## ------------------------------------------------------
+## Order month for correct output. 
+## Check order update
+## ------------------------------------------------------
+
+
+cyclistic_merged$month <- ordered(cyclistic_merged$month, levels = 
+                      c("May '21", "Jun '21", "Jul '21", "Aug '21", "Sep '21", 
+                        "Oct '21", "Nov '21", "Dec '21", "Jan '22", "Feb '22", 
+                        "Mar '22", "Apr '22"))
+
+
+cyclistic_merged %>% 
+  tabyl(month) 
+
+
+
+```
+
+
+```{r chunk-51}
+
+## ------------------------------------------------------
+## Continue exploring data set
+## ------------------------------------------------------
+
+aggregate(cyclistic_merged$ride_length ~ cyclistic_merged$member_casual, FUN = mean)
+
+```
+
+
+
+```{r chunk-52}
+
+aggregate(cyclistic_merged$ride_miles ~ cyclistic_merged$member_casual, FUN = mean)
+
+```
+
+
+```{r chunk-53}
+
+aggregate(cyclistic_merged$ride_length ~ cyclistic_merged$member_casual + cyclistic_merged$day_of_week, FUN = mean)
+
+```
+
+
+```{r chunk-54}
+
+aggregate(cyclistic_merged$ride_miles ~ cyclistic_merged$member_casual + cyclistic_merged$day_of_week, FUN = mean)
+
+```
+
+
+
+```{r chunk-55}
+
+## ------------------------------------------------------
+## Exploration continued
+## ------------------------------------------------------
+
+PercTable(x = cyclistic_merged$rideable_type, 
+          y = cyclistic_merged$member_casual)
+
+
+```
+
+
+```{r chunk-56}
+
+PercTable(x = cyclistic_merged$member_casual, 
+          y = cyclistic_merged$round_trip)
+
+```
+
+
+```{r chunk-57}
+
+PercTable(x = cyclistic_merged$rideable_type, 
+          y = cyclistic_merged$round_trip)
+
+```
+
+
+```{r chunk-58}
+
+PercTable(x = cyclistic_merged$member_casual, 
+          y = cyclistic_merged$month)
+
+```
+
+
+```{r chunk-59}
+
+PercTable(x = cyclistic_merged$member_casual, 
+          y = cyclistic_merged$day_of_week)
+
+```
+
+
+```{r chunk-60}
+
+PercTable(x = cyclistic_merged$member_casual, 
+          y = cyclistic_merged$hour)
+
+```
+
+
+```{r chunk-61}
+
+PercTable(x = cyclistic_merged$member_casual, 
+          y = cyclistic_merged$day_of_month)
+
+
+```
+
+
+
+```{r chunk-62}
+
+## ------------------------------------------------------
+## Exploration wrap up
+## ------------------------------------------------------
+
+Desc(cyclistic_merged$rideable_type, main = "Rideable Type")
+
+
+```
+
+
+```{r chunk-63}
+
+Desc(cyclistic_merged$rideable_type, main = "Rideable Type")
+
+
+```
+
+
+```{r chunk-64}
+
+Desc(cyclistic_merged$member_casual, main = "Member vs. Casual Rider")
+
+
+
+```
+
+
+```{r chunk-65}
+
+## ------------------------------------------------------
+## Create member riders
+## Imported 3,128,493 records 
+## ------------------------------------------------------
+
+
+member_riders <- cyclistic_merged %>% 
+  filter(cyclistic_merged$member_casual == "member")
+
+
+```
+
+
+
+```{r chunk-66}
+
+## ------------------------------------------------------
+## Create casual riders
+## Imported 2,475,796 records 
+## ------------------------------------------------------
+
+
+casual_riders <- cyclistic_merged %>% 
+  filter(cyclistic_merged$member_casual == "casual")
+
+
+```
+
+
+
+```{r chunk-67}
+
+Desc(cyclistic_merged$start_station_name, main = "Top Three Frequented Start Stations", head(3))
+
+```
+
+```{r chunk-68}
+
+
+Desc(member_riders$start_station_name, main = "Top Three Member Frequented Start Stations", head(3))
+
+
+```
+
+
+```{r chunk-69}
+
+Desc(casual_riders$start_station_name, main = "Top Three Casual Frequented Start Stations", head(3))
+
+```
+
+```{r chunk-70}
+
+Desc(cyclistic_merged$end_station_name, main = "Top Three Frequented End Stations", head(3))
+
+```
+
+
+```{r chunk-71}
+
+Desc(member_riders$end_station_name, main = "Top Three Member Frequented End Stations", head(3))
+
+```
+
+
+```{r chunk-72}
+
+
+Desc(casual_riders$end_station_name, main = "Top Three Casual Frequented End Stations", head(3))
+
+
+```
+
+
+
+```{r chunk-73}
+
+Desc(cyclistic_merged$month, main = "Rides by Month")
+
+
+```
+
+```{r chunk-74}
+
+Desc(member_riders$month, main = "Member Rides by Month")
+
+```
+
+
+```{r chunk-75}
+
+Desc(casual_riders$month, main = "Casual Rides by Month")
+
+
+```
+
+```{r chunk-76}
+
+Desc(cyclistic_merged$ride_length, main = "Ride Length")
+
+```
+
+
+```{r chunk-77}
+
+Desc(cyclistic_merged$ride_miles, main = "Ride Length in Miles")
+
+```
+
+
+```{r chunk-78}
+
+Desc(cyclistic_merged$month, main = "Rides per Month")
+
+```
+
+
+
+```{r chunk-79}
+
+Desc(cyclistic_merged$day_of_week, main = "Rides per Day")
+
+
+```
+
+
+
+## Visualize
+
+
+
+Load additional libraries required for visualization of data.
+
+
+
+
+```{r chunk-80}
+
+## ------------------------------------------------------
+## Load required libraries
+## ------------------------------------------------------
+
+
+library(ggplot2)
+library(ggthemes)
+library(scales)
+
+
+```
+
+
+```{r chunk-81}
+
+
+cyclistic_merged %>% 
+  group_by(member_casual, day_of_week) %>%
+  summarise(num_rides = n(), .groups = 'drop') %>%
+  ggplot(aes(x = day_of_week, y = num_rides, fill = member_casual,
+             label = scales::comma(num_rides))) +
+  geom_col(position = "dodge", width = .5) +
+  geom_text(position = position_dodge(width = .9), # move to center of bars
+            vjust = -0.5, # nudge above top of bar
+            size = 3) +
+  scale_y_continuous( labels = scales::comma) +
+  labs(
+    title = "Number of Rides",
+    subtitle = "by weekday",
+    caption = "Data source: Motivate International Inc. Figure 1",
+    x = " ",
+    y = "Number of Rides") +
+theme(legend.title = element_blank())
+
+
+```
+
+
+
+```{r chunk-82}
+
+
+cyclistic_merged %>%
+ggplot(aes(day_of_week, fill = member_casual)) +
+geom_bar(position = "dodge") +
+facet_wrap(~ month) +
+scale_y_continuous( labels = scales::comma) +
+labs(title = "Number of Rides",
+subtitle = "weekday compared by month",
+caption = "Data source: Motivate International Inc. Figure 2",
+y = "Number of Rides",
+fill = "Rider type") +
+xlab("") +
+theme(axis.text.x = element_text(angle = 90), legend.title = element_blank())
+
+
+```
+
+
+```{r chunk-83}
+
+cyclistic_merged %>%
+  group_by(member_casual, month) %>%
+  summarise(num_rides = n(), .groups = 'drop') %>%
+  ggplot(aes(x = month, y = num_rides, fill = member_casual)) +
+  geom_col(position = "dodge", width = .5) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(
+      title = "Number of Rides",
+      subtitle = "by Month",
+      caption = "Data source: Motivate International Inc. Figure 3",
+      x = "",
+      y = "Number of Rides") +
+theme(axis.text.x = element_text(angle = 90), legend.title = element_blank())
+
+
+
+
+
+```
+
+
+```{r chunk-84}
+
+
+cyclistic_merged %>%
+  group_by(member_casual, hour) %>%
+  summarise(num_rides = n(), .groups = 'drop') %>%
+  ggplot(aes(x = hour, y = num_rides, fill = member_casual), las = 2,
+  cex.names = 0.1) +
+  geom_col(position = "dodge") +
+  scale_y_continuous(labels = scales::comma) +
+  labs(
+    title = "Number of Rides",
+    subtitle = "by Hour",
+    caption = "Data source: Motivate International Inc. Figure 4",
+    x = " ",
+    y = "Number of Rides") +
+scale_x_continuous(breaks = seq(0,24, by = 6)) +
+theme(legend.title = element_blank())
+
+
+```
+
+
+```{r chunk-85}
+
+
+cyclistic_merged %>%
+  ggplot(aes(hour, fill = member_casual)) +
+  geom_bar(position = "dodge") +
+  facet_wrap(~ month) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(title = "Number of Rides",
+       subtitle = "monthly by hour",
+       caption = "Data source: Motivate International Inc. Figure 5",
+       y = "Number of Rides",
+       fill = "Rider type") +
+scale_x_continuous(breaks = seq(0,24, by = 4)) +
+xlab("") +
+theme(axis.text.x = element_text(angle = 90), legend.title = element_blank())
+
+
+
+```
+
+
+```{r chunk-86}
+
+cyclistic_merged %>% filter(rideable_type != "docked_bike") %>% ## docked bikes are only used by casual
+  group_by(member_casual, rideable_type) %>%
+  count() %>%
+  group_by(member_casual) %>%
+  mutate(percentage = n/sum(n) * 100) %>%
+  ggplot(aes(x=member_casual, y=percentage, fill=rideable_type)) +
+  geom_col(position="dodge") +
+  geom_text(aes(label = paste0(round(percentage), "%")),
+            position=position_dodge(0.85), vjust = 0) +
+labs(x="Rider Type",
+     y="Percentage (%)",
+     title="Percentage of Rides",
+     subtitle = "by bike type",
+     caption = "Data source: Motivate International Inc. Figure 6") +
+theme(legend.title = element_blank())
+
+
+```
+
+
+```{r chunk-87}
+
+cyclistic_merged %>% filter(member_casual == "member") %>%
+  group_by(start_station_name) %>%
+  summarise(total = n()) %>%
+  arrange(desc(total)) %>%
+  slice_head(n = 3) %>%
+  ggplot(aes(x = reorder(start_station_name, total), y = total,
+             fill=start_station_name)) +
+  scale_y_continuous(labels = scales::comma) +
+  geom_col(width = 0.65) +
+  coord_flip() +
+  labs(y = "Number of Rides",
+       x = "Start Station",
+       caption = "Data source: Motivate International Inc. Figure 7",
+       title = "3 Most Frequented Start Stations",
+       subtitle = "by member user") +
+geom_text(aes(label = total), color="white", hjust=1.1) +
+theme(legend.title = element_blank())
+
+
+```
+
+
+```{r chunk-88}
+
+
+cyclistic_merged %>% filter(member_casual == "casual") %>%
+  group_by(start_station_name) %>%
+  summarise(total = n()) %>%
+  arrange(desc(total)) %>%
+  slice_head(n = 3) %>%
+  ggplot(aes(x = reorder(start_station_name, total), y = total,
+             fill=start_station_name)) +
+  scale_y_continuous(labels = comma) +
+  geom_col(width = 0.65) +
+  coord_flip() +
+  labs(y = "Number of Rides",
+       x = "Start Station",
+       caption = "Data source: Motivate International Inc. Figure 8",
+       title = "3 Most Frequented Start Stations",
+       subtitle = "by casual user") +
+geom_text(aes(label = total), color="white", hjust=1.1) +
+theme(legend.title = element_blank())
+
+
+
+
+
+```
+
+
+```{r chunk-89}
+
+cyclistic_merged %>% 
+  filter(member_casual == "casual") %>%
+  group_by(start_station_name) %>%
+  summarise(total = n()) %>%
+  arrange(desc(total)) %>%
+  slice_head(n = 3) %>%
+  ggplot(aes(x = reorder(start_station_name, total), y = total,
+             fill=start_station_name)) +
+  scale_y_continuous(labels = comma) +
+  geom_col(width = 0.65) +
+  coord_flip() +
+  labs(y = "Number of Rides",
+       x = "Start Station",
+       caption = "Data source: Motivate International Inc. Figure 9",
+       title = "3 Most Frequented Start Stations",
+       subtitle = "by casual user") +
+geom_text(aes(label = total), color="white", hjust=1) +
+theme(legend.title = element_blank())
+27
+
+
+```
+
+
+```{r chunk-90}
+
+cyclistic_merged %>% 
+  filter(member_casual == "member") %>%
+  group_by(end_station_name) %>%
+  summarise(total = n()) %>%
+  arrange(desc(total)) %>%
+  slice_head(n = 3) %>%
+  ggplot(aes(x = reorder(end_station_name, total), y = total,
+  fill=end_station_name)) +
+  scale_y_continuous(labels = comma) +
+  geom_col(width = 0.65) +
+  coord_flip() +
+  labs(y = "Number of Rides",
+       x = "End Station",
+       caption = "Data source: Motivate International Inc. Figure 10",
+       title = "3 Most Frequented End Stations",
+       subtitle = "by member user") +
+geom_text(aes(label = total), color="white", hjust=1) +
+theme(legend.title = element_blank())
+
+
+
+```
+
+```{r chunk-91}
+
+cyclistic_merged %>% 
+  filter(member_casual == "casual") %>%
+  group_by(end_station_name) %>%
+  summarise(total = n()) %>%
+  arrange(desc(total)) %>%
+  slice_head(n = 3) %>%
+  ggplot(aes(x = reorder(end_station_name, total), y = total,
+  fill=end_station_name)) +
+  scale_y_continuous(labels = comma) +
+  geom_col(width = 0.65) +
+  coord_flip() +
+  labs(y = "Number of Rides",
+       x = "End Station",
+       caption = "Data source: Motivate International Inc. Figure 11",
+       title = "3 Most Frequented End Stations",
+       subtitle = "by casual user") +
+geom_text(aes(label = total), color="white", hjust=1) +
+theme(legend.title = element_blank())
+
+
+
+
+```
+
+# Findings
+
+#### *	Members account for 55.8% of rides and casual riders account for the remaining 44.2%.
+#### *	67.5 % of all rides are taken between Monday and Friday. 
+#### *	Member riders are highest Monday through Friday between the hours of 5am and 8 pm.
+#### *	Casual riders are highest weeknights between the hours of 9pm and 4am and Saturday and Sunday
+
+
+
+# Recommendations
+Information was not provided to connect number of rides to a particular rider.
+
+
+1. Promote "Ride with a Friend" as a membership perk on low ridership days (Monday & Tuesday).
+2. Market "Half-Price" riders during the spring in hopes of creating a pre-summer exercise routine.
+3. Offer a weekend only plan at a premium. 
+
+
